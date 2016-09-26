@@ -28,12 +28,12 @@ public class PostScriptReader implements Closeable {
                 String[] args = line.split(" ");
                 if (args.length == 5 && Line.ID.equals(args[4])) {
                     lineObj = new Line(
-                            new Point(
-                                    Integer.valueOf(args[0]),
-                                    Integer.valueOf(args[1])),
-                            new Point(
-                                    Integer.valueOf(args[2]),
-                                    Integer.valueOf(args[3]))
+                        new Point(
+                            Integer.valueOf(args[0]),
+                            Integer.valueOf(args[1])),
+                        new Point(
+                            Integer.valueOf(args[2]),
+                            Integer.valueOf(args[3]))
                     );
                 }
             }

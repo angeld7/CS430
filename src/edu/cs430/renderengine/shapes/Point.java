@@ -19,4 +19,8 @@ public class Point {
     public int getY() {
         return y;
     }
+
+    public static Point translateY(Point point, int ySize) {
+        return new Point(point.x, ySize - point.y);
+    }
 }
