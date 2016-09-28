@@ -6,7 +6,6 @@
     <target name="A1" depends="build">
         <exec executable="java" dir="bin">
               <arg value="edu.drexel.cs430.assignments.A1"/>
-              <arg line="${args}"/>
         </exec>
     </target>
     <target name="clean">
