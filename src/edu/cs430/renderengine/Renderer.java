@@ -9,14 +9,10 @@ import edu.cs430.renderengine.shapes.Point;
  */
 public class Renderer {
 
-    boolean[][] pixelMatrix;
-    int width;
-    int height;
+    private boolean[][] pixelMatrix;
 
     public Renderer(int canvasX, int canvasY) {
         pixelMatrix = new boolean[canvasY][canvasX];
-        width = canvasX;
-        height = canvasY;
     }
 
     public void drawLine(Line line) {
