@@ -20,10 +20,6 @@ public class Point {
         return y;
     }
 
-    public static Point translateY(Point point, int ySize) {
-        return new Point(point.x, ySize - point.y);
-    }
-
     public void setX(int x) {
         this.x = x;
     }

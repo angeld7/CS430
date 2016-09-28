@@ -9,9 +9,9 @@ import java.io.*;
  * Created by Angel on 9/25/2016.
  */
 public class PostScriptReader implements Closeable {
-    public static String BEGIN = "%%%BEGIN";
-    public static String END = "%%%END";
-    public BufferedReader br;
+    private static final String BEGIN = "%%%BEGIN";
+    private static final String END = "%%%END";
+    private BufferedReader br;
 
     public PostScriptReader(File file) throws IOException {
         br = new BufferedReader(new FileReader(file));
