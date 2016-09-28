@@ -1,5 +1,6 @@
 <project default="build">
     <target name="build">
+        <mkdir dir="bin"/>
         <javac srcdir="src" destdir="bin" classpath="bin"/>
     </target>
     <target name="A1" depends="build">
