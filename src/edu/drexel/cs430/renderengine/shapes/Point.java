@@ -1,4 +1,4 @@
-package edu.cs430.renderengine.shapes;
+package edu.drexel.cs430.renderengine.shapes;
 
 /**
  * Created by Angel on 9/25/2016.

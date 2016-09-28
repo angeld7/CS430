@@ -1,9 +1,9 @@
-package edu.cs430.assignments;
+package edu.drexel.cs430.assignments;
 
-import edu.cs430.renderengine.Renderer;
-import edu.cs430.renderengine.shapes.Line;
-import edu.cs430.renderengine.util.PostScriptReader;
-import edu.cs430.renderengine.util.XPMWriter;
+import edu.drexel.cs430.renderengine.Renderer;
+import edu.drexel.cs430.renderengine.shapes.Line;
+import edu.drexel.cs430.renderengine.util.PostScriptReader;
+import edu.drexel.cs430.renderengine.util.XPMWriter;
 
 import java.io.File;
 import java.io.IOException;

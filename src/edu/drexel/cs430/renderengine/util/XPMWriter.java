@@ -1,4 +1,4 @@
-package edu.cs430.renderengine.util;
+package edu.drexel.cs430.renderengine.util;
 
 /**
  * Created by Angel on 9/25/2016.
