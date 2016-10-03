@@ -10,12 +10,12 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Created by Angel on 9/25/2016.
+ * Created by Angel on 10/3/16.
  */
-public class A1 {
-    public static void main(String[] args) {
+public class A2 {
+    public static void main(String[] args){
         LineRenderer lineRenderer = new LineRenderer(500, 500);
-        String filename = ArgParser.getArg("-f",args);
+        String filename = ArgParser.getArg("-f", args);
         if (filename != null) {
             try (PostScriptReader reader = new PostScriptReader(new File(filename))) {
                 Line line;

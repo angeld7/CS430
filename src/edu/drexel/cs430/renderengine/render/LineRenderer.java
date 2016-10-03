@@ -1,4 +1,4 @@
-package edu.drexel.cs430.renderengine;
+package edu.drexel.cs430.renderengine.render;
 
 import edu.drexel.cs430.renderengine.shapes.Line;
 import edu.drexel.cs430.renderengine.shapes.Point;
@@ -6,15 +6,19 @@ import edu.drexel.cs430.renderengine.shapes.Point;
 /**
  * Created by Angel on 9/25/2016.
  */
-public class Renderer {
+public class LineRenderer {
 
     private boolean[][] pixelMatrix;
+    private int height,width;
 
-    public Renderer(int canvasX, int canvasY) {
+    public LineRenderer(int canvasX, int canvasY) {
         pixelMatrix = new boolean[canvasY][canvasX];
+        height = canvasY;
+        width = canvasX;
     }
 
     public void drawLine(Line line) {
+        if(!clipLine(line)) return;
         Point start = line.getStartPoint();
         Point end = line.getEndPoint();
         if (start.getX() == end.getX()) {
@@ -81,6 +85,37 @@ public class Renderer {
         s.setY(e.getY());
         e.setX(tX);
         e.setY(tY);
+    }
+
+    private boolean clipLine(Line line){
+        Point s = line.getStartPoint(), e = line.getEndPoint();
+        int b1 = getBitCode(s), b2 = getBitCode(e);
+        if((b1 & b2) != 0) return false;
+        while((b1 | b2) != 0) {
+            if(b1 != 0) b1 = getBitCode(clipPoint(s));
+            if(b2 != 0) b2 = getBitCode(clipPoint(e));
+        }
+        return true;
+    }
+
+    private Point clipPoint(Point point) {
+        //TODO IMPLEMENT!!
+        return point;
+    }
+
+    private int getBitCode(Point point) {
+        int bitCode = 0;
+        if(point.getX() < 0) {
+            bitCode |= 1;
+        } else if(point.getX() >= width) {
+            bitCode |= 2;
+        }
+        if(point.getY() < 0) {
+            bitCode |= 8;
+        } else if(point.getY() >= height) {
+            bitCode |= 4;
+        }
+        return bitCode;
     }
 
     public boolean[][] getPixelMatrix() {
