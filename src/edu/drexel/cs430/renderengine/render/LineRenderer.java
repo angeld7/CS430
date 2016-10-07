@@ -106,22 +106,29 @@ public class LineRenderer {
     }
 
     private void movePoint(Point point, Point ref, int bit) {
+        float x1 = point.getX(), y1 = point.getY(), x2 = ref.getX(), y2 = ref.getY();
         switch(bit) {
             case 1:
-                point.setY(proportion(point.getX(),point.getY(), ref.getX(), ref.getY()));
+                point.setY(proportion(x1,y1,x2,y2,0));
                 point.setX(0);
                 break;
             case 2:
+                point.setY(proportion(x1,y1,x2,y2,width-1));
+                point.setX(width-1);
                 break;
             case 4:
+                point.setX(proportion(y1, x1, y2, x2, height - 1));
+                point.setY(height-1);
                 break;
             case 8:
+                point.setX(proportion(y1,x1,y2,x2,0));
+                point.setY(0);
                 break;
         }
     }
 
-    private float proportion(float a, float b, float c, float d) {
-        return (-a / (a - c)) * (d - b) + b;
+    private float proportion(float a, float b, float c, float d, float l) {
+        return (l-a / (a - c)) * (d - b) + b;
     }
 
     private int getBitCode(Point point) {
