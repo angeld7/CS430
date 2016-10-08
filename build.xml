@@ -3,11 +3,6 @@
         <mkdir dir="bin"/>
         <javac srcdir="src" destdir="bin" classpath="bin"/>
     </target>
-    <target name="A1" depends="build">
-        <exec executable="java" dir="bin">
-              <arg value="edu.drexel.cs430.assignments.A1"/>
-        </exec>
-    </target>
     <target name="clean">
         <delete dir="bin"/>
     </target>

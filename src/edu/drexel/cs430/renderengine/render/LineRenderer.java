@@ -9,7 +9,7 @@ import edu.drexel.cs430.renderengine.shapes.Point;
 public class LineRenderer {
 
     private boolean[][] pixelMatrix;
-    private int height,width;
+    private int height, width;
 
     public LineRenderer(int canvasX, int canvasY) {
         pixelMatrix = new boolean[canvasY][canvasX];
@@ -18,7 +18,7 @@ public class LineRenderer {
     }
 
     public void drawLine(Line line) {
-        if(!clipLine(line)) return;
+        if (!clipLine(line)) return;
         Point start = line.getStartPoint();
         Point end = line.getEndPoint();
         if (start.getX() == end.getX()) {
@@ -87,60 +87,60 @@ public class LineRenderer {
         e.setY(tY);
     }
 
-    private boolean clipLine(Line line){
+    private boolean clipLine(Line line) {
         Point s = line.getStartPoint(), e = line.getEndPoint();
         int b1 = getBitCode(s), b2 = getBitCode(e);
-        if((b1 & b2) != 0) return false;
-        if((b1 | b2) != 0) {
-            if(b1 != 0) clipPoint(s, e, b1);
-            if(b2 != 0) clipPoint(e, s, b2);
+        if ((b1 & b2) != 0) return false;
+        while ((b1 | b2) != 0) {
+            if (b1 != 0) b1 = getBitCode(clipPoint(s, e, b1));
+            if (b2 != 0) b2 = getBitCode(clipPoint(e, s, b2));
         }
         return true;
     }
 
     private Point clipPoint(Point point, Point ref, int bitCode) {
-        for(int b = 1; b <= 8; b *= 2) {
-            if((b | bitCode) == b) movePoint(point, ref, b);
+        for (int b = 1; b <= 8; b *= 2) {
+            if ((b & bitCode) == b) movePoint(point, ref, b);
         }
         return point;
     }
 
     private void movePoint(Point point, Point ref, int bit) {
         float x1 = point.getX(), y1 = point.getY(), x2 = ref.getX(), y2 = ref.getY();
-        switch(bit) {
+        switch (bit) {
             case 1:
-                point.setY(proportion(x1,y1,x2,y2,0));
+                point.setY(proportion(x1, y1, x2, y2, 0));
                 point.setX(0);
                 break;
             case 2:
-                point.setY(proportion(x1,y1,x2,y2,width-1));
-                point.setX(width-1);
+                point.setY(proportion(x1, y1, x2, y2, width - 1));
+                point.setX(width - 1);
                 break;
             case 4:
                 point.setX(proportion(y1, x1, y2, x2, height - 1));
-                point.setY(height-1);
+                point.setY(height - 1);
                 break;
             case 8:
-                point.setX(proportion(y1,x1,y2,x2,0));
+                point.setX(proportion(y1, x1, y2, x2, 0));
                 point.setY(0);
                 break;
         }
     }
 
     private float proportion(float a, float b, float c, float d, float l) {
-        return (l-a / (a - c)) * (d - b) + b;
+        return ((l - a )/ (c - a)) * (d - b) + b;
     }
 
     private int getBitCode(Point point) {
         int bitCode = 0;
-        if(point.getX() < 0) {
+        if (point.getX() < 0) {
             bitCode |= 1;
-        } else if(point.getX() >= width) {
+        } else if (point.getX() >= width) {
             bitCode |= 2;
         }
-        if(point.getY() < 0) {
+        if (point.getY() < 0) {
             bitCode |= 8;
-        } else if(point.getY() >= height) {
+        } else if (point.getY() >= height) {
             bitCode |= 4;
         }
         return bitCode;
