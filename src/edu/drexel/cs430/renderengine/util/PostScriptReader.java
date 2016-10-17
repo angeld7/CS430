@@ -1,7 +1,7 @@
 package edu.drexel.cs430.renderengine.util;
 
-import edu.drexel.cs430.renderengine.shapes.Line;
-import edu.drexel.cs430.renderengine.shapes.Point;
+import edu.drexel.cs430.renderengine.geometry.Line;
+import edu.drexel.cs430.renderengine.geometry.Point;
 
 import java.io.*;
 

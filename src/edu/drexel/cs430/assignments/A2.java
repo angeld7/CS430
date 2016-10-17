@@ -1,7 +1,7 @@
 package edu.drexel.cs430.assignments;
 
 import edu.drexel.cs430.renderengine.render.LineRenderer;
-import edu.drexel.cs430.renderengine.shapes.Line;
+import edu.drexel.cs430.renderengine.geometry.Line;
 import edu.drexel.cs430.renderengine.util.ArgParser;
 import edu.drexel.cs430.renderengine.util.PostScriptReader;
 import edu.drexel.cs430.renderengine.util.XPMWriter;
