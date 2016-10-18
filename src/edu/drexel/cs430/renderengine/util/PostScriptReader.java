@@ -28,7 +28,7 @@ public class PostScriptReader implements Closeable {
         this.line = br.readLine();
     }
 
-    public Geometry getNextType() throws Exception {
+    public Geometry getNextType() throws RuntimeException {
         if (line == null) return null;
         while (line != null) {
             String[] args = line.split(" ");
@@ -48,10 +48,10 @@ public class PostScriptReader implements Closeable {
             }
             next();
         }
-        throw new Exception("Invalid line in post script file: line = '" + line + "'");
+        throw new RuntimeException("Invalid line in post script file: line = '" + line + "'");
     }
 
-    public Point parsePoint() throws Exception {
+    public Point parsePoint() throws RuntimeException {
         if (line != null) {
             String[] args = line.split(" ");
             if (args != null && args.length == 3 && (MOVE_TO.equals(args[2]) || LINE_TO.equals(args[2]))) {
@@ -61,7 +61,7 @@ public class PostScriptReader implements Closeable {
                 );
             }
         }
-        throw new Exception("No point object has been specified on this line in the post script file.");
+        throw new RuntimeException("No point object has been specified on this line in the post script file.");
 
     }
 
