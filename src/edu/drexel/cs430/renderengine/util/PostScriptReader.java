@@ -1,6 +1,5 @@
 package edu.drexel.cs430.renderengine.util;
 
-import com.sun.media.sound.InvalidFormatException;
 import edu.drexel.cs430.renderengine.geometry.Geometry;
 import edu.drexel.cs430.renderengine.geometry.Line;
 import edu.drexel.cs430.renderengine.geometry.Point;
