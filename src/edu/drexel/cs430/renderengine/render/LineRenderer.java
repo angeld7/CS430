@@ -110,7 +110,7 @@ public class LineRenderer {
         int b1 = getBitCode(s), b2 = getBitCode(e);
         if ((b1 & b2) != 0) return false;
         for (int b = 1; b <= 8; b *= 2) {
-            if ((b1 | b2) == b) clip(line, b1, b);
+            if (((b1 | b2) & b) == b) clip(line, b1, b);
         }
         return true;
     }
@@ -141,7 +141,7 @@ public class LineRenderer {
                 break;
         }
         p1.x = i.x;
-        p2.y = i.y;
+        p1.y = i.y;
     }
 
     private int getBitCode(Point point) {
