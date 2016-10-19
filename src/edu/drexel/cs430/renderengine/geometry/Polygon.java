@@ -9,7 +9,10 @@ import java.util.List;
  * Created by Angel on 10/17/2016.
  */
 public class Polygon implements Iterable<Line> {
-    public List<Point> vertices;
+    private List<Point> vertices;
+    private boolean fill = true;
+
+    private float xMax = Float.MIN_VALUE, xMin = Float.MAX_VALUE, yMax = Float.MIN_VALUE, yMin = Float.MAX_VALUE;
 
     public Polygon() {
         vertices = new ArrayList<>();
@@ -17,14 +20,17 @@ public class Polygon implements Iterable<Line> {
 
     public Polygon(Point... vertices) {
         this.vertices = new ArrayList<>(Arrays.asList(vertices));
+        findLimits();
     }
 
     public Polygon(List<Point> vertices) {
         this.vertices = vertices;
+        findLimits();
     }
 
     public void addVertex(Point point) {
         vertices.add(point);
+        checkPointForLimit(point);
     }
 
     public Point getVertex(int vertexNum) {
@@ -37,6 +43,18 @@ public class Polygon implements Iterable<Line> {
 
     public Line getEdge(int edgeNum) {
         return new Line(getVertex(edgeNum), getVertex(edgeNum + 1));
+    }
+
+    private void findLimits() {
+        vertices.forEach(this::checkPointForLimit);
+    }
+
+    private void checkPointForLimit(Point p) {
+        if(p.x() > xMax) xMax = p.x();
+        if(p.x() < xMin) xMin = p.x();
+        if(p.y() > yMax) yMax = p.y();
+        if(p.y() < yMin) yMin = p.y();
+
     }
 
     @Override
@@ -73,5 +91,29 @@ public class Polygon implements Iterable<Line> {
         public Line next() {
             return getEdge(side++);
         }
+    }
+
+    public float xMax() {
+        return xMax;
+    }
+
+    public float xMin() {
+        return xMin;
+    }
+
+    public float yMax() {
+        return yMax;
+    }
+
+    public float yMin() {
+        return yMin;
+    }
+
+    public boolean isFill() {
+        return fill;
+    }
+
+    public void setFill(boolean fill) {
+        this.fill = fill;
     }
 }

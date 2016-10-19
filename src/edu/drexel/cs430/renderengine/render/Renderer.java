@@ -11,6 +11,7 @@ import edu.drexel.cs430.renderengine.render.clip.PolygonClipper;
  */
 public class Renderer {
     LineRenderer lineRenderer;
+    FillRenderer fillRenderer;
     LineClipper lineClipper;
     PolygonClipper polygonClipper;
     Canvas canvas;
@@ -18,6 +19,7 @@ public class Renderer {
     public Renderer(int width, int height) {
         canvas = new Canvas(width, height);
         lineRenderer = new LineRenderer(canvas);
+        fillRenderer = new FillRenderer(canvas);
         lineClipper = new LineClipper(canvas);
         polygonClipper = new PolygonClipper(canvas, lineClipper);
     }
@@ -35,6 +37,9 @@ public class Renderer {
             for (Line side : polygon) {
                 lineRenderer.render(side);
             }
+        }
+        if (polygon.isFill()) {
+            fillRenderer.fillPolygon(polygon);
         }
     }
 
