@@ -8,7 +8,6 @@ import edu.drexel.cs430.renderengine.render.util.RenderUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**

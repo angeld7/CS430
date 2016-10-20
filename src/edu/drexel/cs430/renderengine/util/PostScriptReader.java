@@ -52,8 +52,8 @@ public class PostScriptReader implements Closeable {
 
     public Point parsePoint() throws RuntimeException {
         if (line != null) {
-            String[] args = line.split(" ");
-            if (args != null && args.length == 3 && (MOVE_TO.equals(args[2]) || LINE_TO.equals(args[2]))) {
+            String[] args = line.trim().split(" ");
+            if (args.length == 3 && (MOVE_TO.equals(args[2]) || LINE_TO.equals(args[2]))) {
                 return new Point(
                         Integer.valueOf(args[0]),
                         Integer.valueOf(args[1])
@@ -67,7 +67,7 @@ public class PostScriptReader implements Closeable {
 
     public Line parseLineObject() {
         if (line != null) {
-            String[] args = line.split(" ");
+            String[] args = line.replaceAll("( )+", " ").trim().split(" ");
             if (args != null && args.length == 5 && LINE.equals(args[4])) {
                 return new Line(
                         new Point(
