@@ -30,7 +30,7 @@ public class PostScriptReader implements Closeable {
     public Geometry getNextType() throws RuntimeException {
         if (line == null) return null;
         while (line != null) {
-            String[] args = line.split(" ");
+            String[] args = getArgs(line);;
             if (args.length > 0) {
                 String command = args[args.length - 1];
                 if (LINE.equals(command)) {
@@ -52,7 +52,7 @@ public class PostScriptReader implements Closeable {
 
     public Point parsePoint() throws RuntimeException {
         if (line != null) {
-            String[] args = line.trim().split(" ");
+            String[] args = getArgs(line);
             if (args.length == 3 && (MOVE_TO.equals(args[2]) || LINE_TO.equals(args[2]))) {
                 return new Point(
                         Integer.valueOf(args[0]),
@@ -64,10 +64,13 @@ public class PostScriptReader implements Closeable {
 
     }
 
+    private String[] getArgs(String line) {
+        return line.replaceAll("( )+", " ").trim().split(" ");
+    }
 
     public Line parseLineObject() {
         if (line != null) {
-            String[] args = line.replaceAll("( )+", " ").trim().split(" ");
+            String[] args = getArgs(line);
             if (args != null && args.length == 5 && LINE.equals(args[4])) {
                 return new Line(
                         new Point(
