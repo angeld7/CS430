@@ -11,6 +11,3 @@ java edu.drexel.cs430.assignments.A4 -f ../testinput/hw4_6.ps > ../out6.xpm
 java edu.drexel.cs430.assignments.A4 -f ../testinput/hw4_7.ps > ../out7.xpm
 java edu.drexel.cs430.assignments.A4 -f ../testinput/hw4_8.ps > ../out8.xpm
 java edu.drexel.cs430.assignments.A4 -f ../testinput/hw4_9.ps > ../out9.xpm
-
-
-

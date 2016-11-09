@@ -1,5 +1,7 @@
 package edu.drexel.cs430.renderengine.geometry;
 
+import org.apache.commons.math3.linear.RealMatrix;
+
 /**
  * Created by Angel on 9/25/2016.
  */
@@ -32,5 +34,8 @@ public class Line {
         );
     }
 
-
+    public void transform(RealMatrix transformation) {
+        startPoint.transform(transformation);
+        endPoint.transform(transformation);
+    }
 }

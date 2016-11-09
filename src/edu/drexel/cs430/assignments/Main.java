@@ -4,9 +4,7 @@ import edu.drexel.cs430.renderengine.geometry.Geometry;
 import edu.drexel.cs430.renderengine.geometry.Point;
 import edu.drexel.cs430.renderengine.geometry.Polygon;
 import edu.drexel.cs430.renderengine.render.Renderer;
-import edu.drexel.cs430.renderengine.util.ArgParser;
-import edu.drexel.cs430.renderengine.util.PostScriptReader;
-import edu.drexel.cs430.renderengine.util.XPMWriter;
+import edu.drexel.cs430.renderengine.util.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,12 +12,12 @@ import java.io.IOException;
 /**
  * Created by Angel on 10/18/2016.
  */
-public class A3 {
+public class Main {
     public static void main(String[] args) {
-        Renderer renderer = new Renderer(500, 500);
-        String filename = ArgParser.getArg("-f", args);
-        if (filename != null) {
-            try (PostScriptReader reader = new PostScriptReader(new File(filename))) {
+        Arguments arguments = ArgParser.getArgs(args);
+        Renderer renderer = new Renderer(arguments);
+        if (arguments.getFilename() != null) {
+            try (PostScriptReader reader = new PostScriptReader(new File(arguments.getFilename()))) {
                 Geometry type;
                 Polygon p = new Polygon(new Point(0, 0));
                 while ((type = reader.getNextType()) != null) {

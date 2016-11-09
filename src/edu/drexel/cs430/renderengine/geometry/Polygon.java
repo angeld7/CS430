@@ -1,5 +1,7 @@
 package edu.drexel.cs430.renderengine.geometry;
 
+import org.apache.commons.math3.linear.RealMatrix;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -20,17 +22,31 @@ public class Polygon implements Iterable<Line> {
 
     public Polygon(Point... vertices) {
         this.vertices = new ArrayList<>(Arrays.asList(vertices));
+        checkFirstPoint();
         findLimits();
     }
 
     public Polygon(List<Point> vertices) {
         this.vertices = vertices;
+        checkFirstPoint();
         findLimits();
     }
 
     public void addVertex(Point point) {
+        if(vertices.size() > 1) {
+            vertices.remove(vertices.size() - 1);
+        }
         vertices.add(point);
+        checkFirstPoint();
         checkPointForLimit(point);
+    }
+
+    private void checkFirstPoint() {
+        Point firstPoint = vertices.get(0);
+        Point lastPoint = vertices.get(vertices.size() - 1);
+        if (!firstPoint.equals(lastPoint)) {
+            vertices.add(firstPoint);
+        }
     }
 
     public Point getVertex(int vertexNum) {
@@ -50,10 +66,10 @@ public class Polygon implements Iterable<Line> {
     }
 
     private void checkPointForLimit(Point p) {
-        if(p.x() > xMax) xMax = p.x();
-        if(p.x() < xMin) xMin = p.x();
-        if(p.y() > yMax) yMax = p.y();
-        if(p.y() < yMin) yMin = p.y();
+        if (p.x() > xMax) xMax = p.x();
+        if (p.x() < xMin) xMin = p.x();
+        if (p.y() > yMax) yMax = p.y();
+        if (p.y() < yMin) yMin = p.y();
 
     }
 
@@ -115,5 +131,10 @@ public class Polygon implements Iterable<Line> {
 
     public void setFill(boolean fill) {
         this.fill = fill;
+    }
+
+    public void transform(RealMatrix transformation) {
+        vertices.forEach(point -> point.transform(transformation));
+        findLimits();
     }
 }

@@ -48,14 +48,14 @@ public class LineClipper {
 
     private int getBitCode(Point point) {
         int bitCode = 0;
-        if (point.x() < 0) {
+        if (point.x() < canvas.xMin) {
             bitCode |= 1;
-        } else if (point.x() >= canvas.width) {
+        } else if (point.x() >= canvas.xMax) {
             bitCode |= 2;
         }
-        if (point.y() < 0) {
+        if (point.y() < canvas.yMin) {
             bitCode |= 8;
-        } else if (point.y() >= canvas.height) {
+        } else if (point.y() >= canvas.yMax) {
             bitCode |= 4;
         }
         return bitCode;
