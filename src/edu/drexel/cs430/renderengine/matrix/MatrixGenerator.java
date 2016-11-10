@@ -13,7 +13,7 @@ public class MatrixGenerator {
         RealMatrix translation = getTranslationMatrix(args.getTranslateX(), args.getTranslateY());
         RealMatrix scale = getScaleMatrix(args.getScale(), args.getScale());
         RealMatrix rotation = getRotationMatrix(Math.toRadians(args.getRotation()));
-        return scale.multiply(rotation.multiply(translation));
+        return translation.multiply(rotation.multiply(scale));//scale.multiply(rotation.multiply(translation));
     }
 
     public static RealMatrix generateWorldToViewportMatrix(Arguments args) {

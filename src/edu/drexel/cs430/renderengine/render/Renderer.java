@@ -1,6 +1,5 @@
 package edu.drexel.cs430.renderengine.render;
 
-import com.sun.org.apache.xpath.internal.Arg;
 import edu.drexel.cs430.renderengine.geometry.Canvas;
 import edu.drexel.cs430.renderengine.geometry.Line;
 import edu.drexel.cs430.renderengine.geometry.Polygon;

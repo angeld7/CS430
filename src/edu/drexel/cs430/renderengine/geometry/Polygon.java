@@ -22,43 +22,29 @@ public class Polygon implements Iterable<Line> {
 
     public Polygon(Point... vertices) {
         this.vertices = new ArrayList<>(Arrays.asList(vertices));
-        checkFirstPoint();
         findLimits();
     }
 
     public Polygon(List<Point> vertices) {
         this.vertices = vertices;
-        checkFirstPoint();
         findLimits();
     }
 
     public void addVertex(Point point) {
-        if(vertices.size() > 1) {
-            vertices.remove(vertices.size() - 1);
-        }
         vertices.add(point);
-        checkFirstPoint();
         checkPointForLimit(point);
     }
 
-    private void checkFirstPoint() {
-        Point firstPoint = vertices.get(0);
-        Point lastPoint = vertices.get(vertices.size() - 1);
-        if (!firstPoint.equals(lastPoint)) {
-            vertices.add(firstPoint);
-        }
+    public int getNamOfVertices() {
+        return vertices.size();
     }
 
     public Point getVertex(int vertexNum) {
         return vertices.get(vertexNum);
     }
 
-    public int getNumSides() {
-        return vertices.size() - 1;
-    }
-
     public Line getEdge(int edgeNum) {
-        return new Line(getVertex(edgeNum), getVertex(edgeNum + 1));
+        return new Line(getVertex((edgeNum - 1) < 0 ? vertices.size() - 1 : edgeNum - 1), getVertex(edgeNum));
     }
 
     private void findLimits() {
@@ -100,7 +86,7 @@ public class Polygon implements Iterable<Line> {
 
         @Override
         public boolean hasNext() {
-            return side < getNumSides();
+            return side < vertices.size();
         }
 
         @Override

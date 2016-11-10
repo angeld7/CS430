@@ -1,6 +1,9 @@
 <project default="build">
     <target name="build">
         <mkdir dir="bin"/>
+        <unzip dest="bin">
+            <fileset dir ="lib"/>
+        </unzip>
         <javac srcdir="src" destdir="bin" classpath="bin"/>
     </target>
     <target name="clean">

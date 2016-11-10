@@ -24,7 +24,7 @@ public class PolygonClipper {
             for (Line lSide : lastP) {
                 Line l = lineClipper.clip(lSide, cSide);
                 if (l != null) {
-                    if (RenderUtils.isLeft(lSide.start(), cSide) || newP.getNumSides() < 0) {
+                    if (RenderUtils.isLeft(lSide.start(), cSide)) {
                         newP.addVertex(l.start());
                     }
                     newP.addVertex(l.end());
@@ -33,6 +33,6 @@ public class PolygonClipper {
             lastP = newP;
             newP = new Polygon();
         }
-        return lastP.getNumSides() == 0 ? null : lastP;
+        return lastP.getNamOfVertices() == 0 ? null : lastP;
     }
 }
