@@ -30,7 +30,7 @@ public class PostScriptReader implements Closeable {
     public Geometry getNextType() throws RuntimeException {
         if (line == null) return null;
         while (line != null) {
-            String[] args = getArgs(line);;
+            String[] args = getArgs(line);
             if (args.length > 0) {
                 String command = args[args.length - 1];
                 if (LINE.equals(command)) {

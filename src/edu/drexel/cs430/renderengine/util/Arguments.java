@@ -1,5 +1,7 @@
 package edu.drexel.cs430.renderengine.util;
 
+import edu.drexel.cs430.renderengine.geometry.Vector;
+
 /**
  * Created by Angel on 11/8/2016.
  */
@@ -17,9 +19,30 @@ public class Arguments {
     private int lowerViewY = 0;
     private int upperViewX = 499;
     private int upperViewY = 499;
+    private float prpX = 0;
+    private float prpY = 0;
+    private float prpZ = 1;
+    private float vrpX = 0;
+    private float vrpY = 0;
+    private float vrpZ = 0;
+    private float vpnX = 0;
+    private float vpnY = 0;
+    private float vpnZ = -1;
+    private float vupX = 0;
+    private float vupY = 1;
+    private float vupZ = 0;
+    private float uMin = -0.7f;
+    private float vMin = -0.7f;
+    private float uMax = 0.7f;
+    private float vMax = 0.7f;
+    private boolean parallelProjection = false;
 
     public String getFilename() {
         return filename;
+    }
+
+    public boolean is3d() {
+        return filename != null && ".smf".equals(filename.substring(filename.length() - 4).toLowerCase());
     }
 
     public void setFilename(String filename) {
@@ -120,5 +143,157 @@ public class Arguments {
 
     public void setUpperViewY(int upperViewY) {
         this.upperViewY = upperViewY;
+    }
+
+    public float getPrpX() {
+        return prpX;
+    }
+
+    public void setPrpX(float prpX) {
+        this.prpX = prpX;
+    }
+
+    public float getPrpY() {
+        return prpY;
+    }
+
+    public void setPrpY(float prpY) {
+        this.prpY = prpY;
+    }
+
+    public float getPrpZ() {
+        return prpZ;
+    }
+
+    public void setPrpZ(float prpZ) {
+        this.prpZ = prpZ;
+    }
+
+    public float getVrpX() {
+        return vrpX;
+    }
+
+    public void setVrpX(float vrpX) {
+        this.vrpX = vrpX;
+    }
+
+    public float getVrpY() {
+        return vrpY;
+    }
+
+    public void setVrpY(float vrpY) {
+        this.vrpY = vrpY;
+    }
+
+    public float getVrpZ() {
+        return vrpZ;
+    }
+
+    public void setVrpZ(float vrpZ) {
+        this.vrpZ = vrpZ;
+    }
+
+    public float getVpnX() {
+        return vpnX;
+    }
+
+    public void setVpnX(float vpnX) {
+        this.vpnX = vpnX;
+    }
+
+    public float getVpnY() {
+        return vpnY;
+    }
+
+    public void setVpnY(float vpnY) {
+        this.vpnY = vpnY;
+    }
+
+    public float getVpnZ() {
+        return vpnZ;
+    }
+
+    public void setVpnZ(float vpnZ) {
+        this.vpnZ = vpnZ;
+    }
+
+    public float getVupX() {
+        return vupX;
+    }
+
+    public void setVupX(float vupX) {
+        this.vupX = vupX;
+    }
+
+    public float getVupY() {
+        return vupY;
+    }
+
+    public void setVupY(float vupY) {
+        this.vupY = vupY;
+    }
+
+    public float getVupZ() {
+        return vupZ;
+    }
+
+    public void setVupZ(float vupZ) {
+        this.vupZ = vupZ;
+    }
+
+    public float getuMin() {
+        return uMin;
+    }
+
+    public void setuMin(float uMin) {
+        this.uMin = uMin;
+    }
+
+    public float getvMin() {
+        return vMin;
+    }
+
+    public void setvMin(float vMin) {
+        this.vMin = vMin;
+    }
+
+    public float getuMax() {
+        return uMax;
+    }
+
+    public void setuMax(float uMax) {
+        this.uMax = uMax;
+    }
+
+    public float getvMax() {
+        return vMax;
+    }
+
+    public void setvMax(float vMax) {
+        this.vMax = vMax;
+    }
+
+    public boolean isParallelProjection() {
+        return parallelProjection;
+    }
+
+    public void setParallelProjection(boolean parrallelProjection) {
+        this.parallelProjection = parrallelProjection;
+    }
+
+    public Vector getPRP() {
+        return new Vector(prpX,prpY,prpZ);
+    }
+
+    public Vector getVRP() {
+        return new Vector(vrpX,vrpY,vrpZ);
+    }
+
+    public Vector getVPN() {
+        return new Vector(vpnX,vpnY,vpnZ);
+    }
+
+    public Vector getVUP() {
+        return new Vector(vupX,vpnY,vupZ);
     }
 }

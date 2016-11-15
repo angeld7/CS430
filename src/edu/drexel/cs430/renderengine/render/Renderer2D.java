@@ -12,7 +12,7 @@ import org.apache.commons.math3.linear.RealMatrix;
 /**
  * Created by Angel on 10/17/2016.
  */
-public class Renderer {
+public class Renderer2D {
     private LineRenderer lineRenderer;
     private FillRenderer fillRenderer;
     private LineClipper lineClipper;
@@ -21,7 +21,7 @@ public class Renderer {
     private RealMatrix transformation;
     private RealMatrix worldToViewport;
 
-    public Renderer(Arguments args) {
+    public Renderer2D(Arguments args) {
         canvas = new Canvas(
                 500,
                 500,

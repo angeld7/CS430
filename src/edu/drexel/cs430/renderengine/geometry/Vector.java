@@ -13,6 +13,10 @@ public class Vector extends Point {
         super(x, y);
     }
 
+    public Vector(float prpX, float prpY, float prpZ) {
+        super(prpX, prpY, prpZ);
+    }
+
     public static Vector subtract(Point p1, Point p2) {
         return new Vector(p1.x() - p2.x(), p1.y() - p2.y());
     }

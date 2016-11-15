@@ -9,15 +9,28 @@ import org.apache.commons.math3.linear.RealMatrix;
 public class Point {
     private float x;
     private float y;
+    private float z;
+    private boolean is2d;
 
     public Point(float x, float y) {
         this.x = x;
         this.y = y;
+        z = 1;
+        is2d = true;
+    }
+
+    public Point(float x, float y, float z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        is2d = false;
     }
 
     public Point(Point p) {
         x = p.x;
         y = p.y;
+        z = p.z;
+        is2d = p.is2d;
     }
 
     public float x() {
@@ -28,6 +41,10 @@ public class Point {
         return y;
     }
 
+    public float z() {
+        return z;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -36,28 +53,24 @@ public class Point {
         Point point = (Point) o;
 
         if (Float.compare(point.x, x) != 0) return false;
-        return Float.compare(point.y, y) == 0;
+        if (Float.compare(point.y, y) != 0) return false;
+        return Float.compare(point.z, z) == 0;
 
-    }
-
-    public boolean isEqualRounded(Point p) {
-        if (this == p) return true;
-        if (p == null) return false;
-        if (Float.compare(Math.round(p.x), Math.round(x)) != 0) return false;
-        return Float.compare(Math.round(p.y), Math.round(y)) == 0;
     }
 
     @Override
     public int hashCode() {
         int result = (x != +0.0f ? Float.floatToIntBits(x) : 0);
         result = 31 * result + (y != +0.0f ? Float.floatToIntBits(y) : 0);
+        result = 31 * result + (z != +0.0f ? Float.floatToIntBits(z) : 0);
         return result;
     }
 
     public void transform(RealMatrix transform) {
-        RealMatrix newPoint = transform.multiply(new Array2DRowRealMatrix(new double[]{x, y, 1}));
+        RealMatrix newPoint = transform.multiply(new Array2DRowRealMatrix(new double[]{x, y, z}));
         double[] arr = newPoint.getColumn(0);
         x = Math.round(arr[0]);
         y = Math.round(arr[1]);
+        z = is2d ? 1 : Math.round(arr[2]);
     }
 }
