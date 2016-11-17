@@ -119,8 +119,13 @@ public class Polygon implements Iterable<Line> {
         this.fill = fill;
     }
 
-    public void transform(RealMatrix transformation) {
-        vertices.forEach(point -> point.transform(transformation));
+    public void transform3D(RealMatrix transformation) {
+        vertices.forEach(point -> point.transform3D(transformation));
+        findLimits();
+    }
+
+    public void transform2D(RealMatrix transformation) {
+        vertices.forEach(point -> point.transform2D(transformation));
         findLimits();
     }
 }

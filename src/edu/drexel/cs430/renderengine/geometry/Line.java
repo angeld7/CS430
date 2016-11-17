@@ -34,8 +34,13 @@ public class Line {
         );
     }
 
-    public void transform(RealMatrix transformation) {
-        startPoint.transform(transformation);
-        endPoint.transform(transformation);
+    public void transform2D(RealMatrix transformation) {
+        startPoint.transform2D(transformation);
+        endPoint.transform2D(transformation);
+    }
+
+    public void transform3D(RealMatrix transformation) {
+        startPoint.transform3D(transformation);
+        endPoint.transform3D(transformation);
     }
 }

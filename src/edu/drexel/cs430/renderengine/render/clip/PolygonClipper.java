@@ -17,7 +17,7 @@ public class PolygonClipper {
         this.canvas = canvas;
     }
 
-    public Polygon clip(Polygon polygon) {
+    public Polygon clip2D(Polygon polygon) {
         Polygon lastP = polygon;
         Polygon newP = new Polygon();
         for (Line cSide : canvas.sides) {
@@ -34,5 +34,9 @@ public class PolygonClipper {
             newP = new Polygon();
         }
         return lastP.getNamOfVertices() == 0 ? null : lastP;
+    }
+
+    public Polygon clip3D(Polygon polygon) {
+        return polygon.xMin() < 0 || polygon.xMax() > 1 || polygon.yMin() < 0 || polygon.yMax() > 1 ? null : polygon;
     }
 }

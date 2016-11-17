@@ -11,10 +11,10 @@ public class Arguments {
     private double rotation = 0;
     private int translateX = 0;
     private int translateY = 0;
-    private int lowerWorldX = 0;
-    private int lowerWorldY = 0;
-    private int upperWorldX = 499;
-    private int upperWorldY = 499;
+    private int lowerWorldX = -2;
+    private int lowerWorldY = -2;
+    private int upperWorldX = 2;
+    private int upperWorldY = 2;
     private int lowerViewX = 0;
     private int lowerViewY = 0;
     private int upperViewX = 499;
@@ -35,6 +35,8 @@ public class Arguments {
     private float vMin = -0.7f;
     private float uMax = 0.7f;
     private float vMax = 0.7f;
+    private float front = 0.6f;
+    private float back = 0.6f;
     private boolean parallelProjection = false;
 
     public String getFilename() {
@@ -275,6 +277,22 @@ public class Arguments {
 
     public boolean isParallelProjection() {
         return parallelProjection;
+    }
+
+    public float getFront() {
+        return front;
+    }
+
+    public void setFront(float front) {
+        this.front = front;
+    }
+
+    public float getBack() {
+        return back;
+    }
+
+    public void setBack(float back) {
+        this.back = back;
     }
 
     public void setParallelProjection(boolean parrallelProjection) {

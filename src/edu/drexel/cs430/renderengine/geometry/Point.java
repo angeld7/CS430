@@ -66,11 +66,18 @@ public class Point {
         return result;
     }
 
-    public void transform(RealMatrix transform) {
-        RealMatrix newPoint = transform.multiply(new Array2DRowRealMatrix(new double[]{x, y, z}));
+    public void transform2D(RealMatrix transform) {
+        RealMatrix newPoint = transform.multiply(new Array2DRowRealMatrix(new double[]{x, y, 1}));
         double[] arr = newPoint.getColumn(0);
-        x = Math.round(arr[0]);
-        y = Math.round(arr[1]);
-        z = is2d ? 1 : Math.round(arr[2]);
+        x = (float) arr[0];
+        y = (float) arr[1];
+    }
+
+    public void transform3D(RealMatrix transform) {
+        RealMatrix newPoint = transform.multiply(new Array2DRowRealMatrix(new double[]{x, y, z, 1}));
+        double[] arr = newPoint.getColumn(0);
+        x = (float) arr[0];
+        y = (float) arr[1];
+        z = (float) arr[2];
     }
 }

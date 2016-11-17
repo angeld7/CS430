@@ -26,9 +26,11 @@ public class SMFReader implements Closeable {
                         Float.valueOf(arr[2]),
                         Float.valueOf(arr[3]))
                 );
+            } else if ("f".equals(arr[0])) {
+                break;
             }
         }
-        this.line = br.readLine();
+        this.line = line;
     }
 
     private String[] getLineArr(String line) {
@@ -37,16 +39,16 @@ public class SMFReader implements Closeable {
 
     public Polygon nextPolygon() throws IOException {
         Polygon polygon = null;
-        String line;
-        if ((line = br.readLine()) != null) {
+        if (line != null) {
             String[] arr = getLineArr(line);
             if (arr.length > 3 && "f".equals(arr[0])) {
                 polygon = new Polygon();
                 for (int i = 1; i < arr.length; i++) {
-                    polygon.addVertex(points.get(Integer.valueOf(arr[i])));
+                    polygon.addVertex(points.get(Integer.valueOf(arr[i]) - 1));
                 }
             }
         }
+        line = br.readLine();
         return polygon;
     }
 

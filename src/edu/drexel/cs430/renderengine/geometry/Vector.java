@@ -1,5 +1,7 @@
 package edu.drexel.cs430.renderengine.geometry;
 
+import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
+
 /**
  * Created by Angel on 10/17/16.
  */
@@ -33,6 +35,16 @@ public class Vector extends Point {
         return (v1.x() * v2.x()) + (v1.y() * v2.y());
     }
 
+    public Vector crossProduct(Vector v) {
+        Vector3D v1 = new Vector3D(x(), y(), z());
+        Vector3D v2 = new Vector3D(v.x(), v.y(), v.z());
+        Vector3D p = v1.crossProduct(v2);
+        return new Vector((float) p.getX(), (float) p.getY(), (float) p.getZ());
+    }
+
+    public Vector multiply(float s) {
+        return new Vector(x() * s, y() * s, z() * s);
+    }
 
     public Vector normalize() {
         float mag = magnitude();
