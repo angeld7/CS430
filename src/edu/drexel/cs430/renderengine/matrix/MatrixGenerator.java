@@ -66,8 +66,8 @@ public class MatrixGenerator {
     }
 
     private static RealMatrix getCameraRotation(Vector vpn, Vector vup) {
-        Vector n = vpn;
-        Vector u = vup.crossProduct(vpn);
+        Vector n = vpn.normalize();
+        Vector u = vup.crossProduct(vpn).normalize();
         Vector v = n.crossProduct(u);
         return new Array2DRowRealMatrix(
                 new double[][]{
@@ -87,7 +87,7 @@ public class MatrixGenerator {
         } else {
             projectionMatrix = getPerspectiveProjectionMatrix(args.getuMax(), args.getuMin(), args.getvMax(), args.getvMin(), args.getBack(), args.getPRP());
         }
-        return viewMatrix.multiply(projectionMatrix);
+        return projectionMatrix.multiply(viewMatrix);
     }
 
     private static RealMatrix getViewMatrix(Vector vpn, Vector vup, Vector vrp) {

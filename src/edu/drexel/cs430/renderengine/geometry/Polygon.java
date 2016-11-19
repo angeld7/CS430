@@ -14,10 +14,12 @@ public class Polygon implements Iterable<Line> {
     private List<Point> vertices;
     private boolean fill = true;
 
-    private float xMax = Float.MIN_VALUE, xMin = Float.MAX_VALUE, yMax = Float.MIN_VALUE, yMin = Float.MAX_VALUE;
+    private static final float MAX = Float.MAX_VALUE;
+    private float xMax, xMin, yMax, yMin, zMax, zMin;
 
     public Polygon() {
         vertices = new ArrayList<>();
+        resetLimits();
     }
 
     public Polygon(Point... vertices) {
@@ -48,7 +50,17 @@ public class Polygon implements Iterable<Line> {
     }
 
     private void findLimits() {
+        resetLimits();
         vertices.forEach(this::checkPointForLimit);
+    }
+
+    public void resetLimits() {
+        xMax = -MAX;
+        xMin = MAX;
+        yMax = -MAX;
+        yMin = MAX;
+        zMax = -MAX;
+        zMin = MAX;
     }
 
     private void checkPointForLimit(Point p) {
@@ -56,6 +68,8 @@ public class Polygon implements Iterable<Line> {
         if (p.x() < xMin) xMin = p.x();
         if (p.y() > yMax) yMax = p.y();
         if (p.y() < yMin) yMin = p.y();
+        if (p.z() > zMax) zMax = p.z();
+        if (p.z() < zMin) zMin = p.z();
 
     }
 
@@ -78,6 +92,10 @@ public class Polygon implements Iterable<Line> {
     @Override
     public SideIterator iterator() {
         return new SideIterator();
+    }
+
+    public List<Point> getVerticies() {
+        return vertices;
     }
 
     public class SideIterator implements Iterator<Line> {
@@ -111,6 +129,14 @@ public class Polygon implements Iterable<Line> {
         return yMin;
     }
 
+    public float zMax() {
+        return zMax;
+    }
+
+    public float zMin() {
+        return zMin;
+    }
+
     public boolean isFill() {
         return fill;
     }
@@ -119,13 +145,27 @@ public class Polygon implements Iterable<Line> {
         this.fill = fill;
     }
 
-    public void transform3D(RealMatrix transformation) {
-        vertices.forEach(point -> point.transform3D(transformation));
-        findLimits();
+    public Polygon transform3D(RealMatrix transformation) {
+        List<Point> newPoints = new ArrayList<>();
+        vertices.forEach(point ->
+                newPoints.add(point.transform3D(transformation))
+        );
+        return new Polygon(newPoints);
     }
 
-    public void transform2D(RealMatrix transformation) {
-        vertices.forEach(point -> point.transform2D(transformation));
-        findLimits();
+    public Polygon transform2D(RealMatrix transformation) {
+        List<Point> newPoints = new ArrayList<>();
+        vertices.forEach(point ->
+                newPoints.add(point.transform2D(transformation))
+        );
+        return new Polygon(newPoints);
+    }
+
+    public Polygon perspectiveScale() {
+        List<Point> newPoints = new ArrayList<>();
+        vertices.forEach(p ->
+                newPoints.add(new Point(p.x() / -p.z(), p.y() / -p.z(), p.z()))
+        );
+        return new Polygon(newPoints);
     }
 }

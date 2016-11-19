@@ -2,10 +2,12 @@ package edu.drexel.cs430.renderengine.geometry;
 
 import org.apache.commons.math3.linear.RealMatrix;
 
+import java.util.Iterator;
+
 /**
  * Created by Angel on 9/25/2016.
  */
-public class Line {
+public class Line implements Iterable<Point> {
     private Point startPoint;
     private Point endPoint;
 
@@ -34,13 +36,38 @@ public class Line {
         );
     }
 
-    public void transform2D(RealMatrix transformation) {
-        startPoint.transform2D(transformation);
-        endPoint.transform2D(transformation);
+    public Line transform2D(RealMatrix transformation) {
+        return new Line(startPoint.transform2D(transformation),
+                endPoint.transform2D(transformation));
     }
 
-    public void transform3D(RealMatrix transformation) {
-        startPoint.transform3D(transformation);
-        endPoint.transform3D(transformation);
+    public Line transform3D(RealMatrix transformation) {
+        return new Line(startPoint.transform3D(transformation),
+                endPoint.transform3D(transformation));
+    }
+
+    @Override
+    public Iterator<Point> iterator() {
+        return new PointIterator();
+    }
+
+    public class PointIterator implements Iterator<Point> {
+
+        boolean start = true;
+
+        @Override
+        public boolean hasNext() {
+            return start;
+        }
+
+        @Override
+        public Point next() {
+            if (start) {
+                start = false;
+                return startPoint;
+            } else {
+                return endPoint;
+            }
+        }
     }
 }

@@ -2,11 +2,13 @@ package edu.drexel.cs430.renderengine.render;
 
 import edu.drexel.cs430.renderengine.geometry.Canvas;
 import edu.drexel.cs430.renderengine.geometry.Line;
+import edu.drexel.cs430.renderengine.geometry.Point;
 import edu.drexel.cs430.renderengine.geometry.Polygon;
 import edu.drexel.cs430.renderengine.matrix.MatrixGenerator;
 import edu.drexel.cs430.renderengine.render.clip.LineClipper;
 import edu.drexel.cs430.renderengine.render.clip.PolygonClipper;
 import edu.drexel.cs430.renderengine.util.Arguments;
+import edu.drexel.cs430.renderengine.util.SwingDisplay;
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.RealMatrix;
 
@@ -22,6 +24,10 @@ public class Renderer {
     private RealMatrix transformation;
     private RealMatrix worldToViewport2D;
     private RealMatrix worldToViewport3D;
+    private boolean parallel = true;
+    private float zMin;
+
+    private SwingDisplay swingDisplay = null;
 
     public Renderer(Arguments args) {
         canvas = new Canvas(
@@ -37,40 +43,40 @@ public class Renderer {
         lineClipper = new LineClipper(canvas);
         polygonClipper = new PolygonClipper(canvas, lineClipper);
         if (args.is3d()) {
-            worldToViewport3D = (new Array2DRowRealMatrix(
-                    new double[][]{
-                            {0.89, 0, 0, 0},
-                            {0, 0.89, 0, 0},
-                            {0, 0, 0.63, -0.63},
-                            {0, 0, 0, 1}
-                    }
-            )).multiply(new Array2DRowRealMatrix(
-                    new double[][]{
-                            {-1, 0, 0, 0},
-                            {0, 1, 0, 0},
-                            {0, 0, -1, 0},
-                            {0, 0, 0, 1}
-                    }
-            ));//MatrixGenerator.get3DMatrix(args);
+            worldToViewport3D = MatrixGenerator.get3DMatrix(args);
+            args.setLowerWorldX(-1);
+            args.setLowerWorldY(-1);
+            args.setUpperWorldX(1);
+            args.setUpperWorldY(1);
+            worldToViewport2D = MatrixGenerator.generateWorldToViewportMatrix(args);
+            parallel = args.isParallelProjection();
+            zMin = (args.getPrpZ() - args.getFront()) / (args.getBack() - args.getPrpZ());
+        } else {
+            transformation = MatrixGenerator.generateTransformationMatrix(args);
+            worldToViewport2D = MatrixGenerator.generateWorldToViewportMatrix(args);
         }
-        transformation = MatrixGenerator.generateTransformationMatrix(args);
-        worldToViewport2D = MatrixGenerator.generateWorldToViewportMatrix(args);
+        if (args.isDisplay()) {
+            swingDisplay = new SwingDisplay();
+        }
     }
 
     public void render2D(Line line) {
         line.transform2D(transformation);
         line = lineClipper.clip(line);
         if (line != null) {
-            line.transform3D(worldToViewport2D);
+            line.transform2D(worldToViewport2D);
             lineRenderer.render(line);
+        }
+        if (swingDisplay != null) {
+            swingDisplay.setImageArray(canvas.pixelMatrix);
         }
     }
 
     public void render2D(Polygon polygon) {
-        polygon.transform2D(transformation);
+        polygon = polygon.transform2D(transformation);
         polygon = polygonClipper.clip2D(polygon);
         if (polygon != null) {
-            polygon.transform2D(worldToViewport2D);
+            polygon = polygon.transform2D(worldToViewport2D);
             for (Line side : polygon) {
                 lineRenderer.render(side);
             }
@@ -78,19 +84,28 @@ public class Renderer {
                 fillRenderer.fillPolygon(polygon);
             }
         }
+        if (swingDisplay != null) {
+            swingDisplay.setImageArray(canvas.pixelMatrix);
+        }
     }
 
+
     public void render3D(Polygon polygon) {
-        polygon.transform3D(worldToViewport3D);
-        polygon = polygonClipper.clip2D(polygon);
-        //polygon = polygonClipper.clip3D(polygon);
+        polygon = polygon.transform3D(worldToViewport3D);
+        if (!parallel) {
+            polygon = polygonClipper.clip3DPerspective(polygon, zMin);
+            if (polygon != null) polygon = polygon.perspectiveScale();
+        } else {
+            polygon = polygonClipper.clip3DParallel(polygon);
+        }
         if (polygon != null) {
-            polygon.transform2D(worldToViewport2D);
+            polygon = polygon.transform2D(worldToViewport2D);
             for (Line side : polygon) {
-                if (side.start().x() > 0 && side.start().y() > 0 && side.end().x() > 0 && side.end().y() > 0) {
-                    lineRenderer.render(side);
-                }
+                lineRenderer.render(side);
             }
+        }
+        if (swingDisplay != null) {
+            swingDisplay.setImageArray(canvas.pixelMatrix);
         }
     }
 

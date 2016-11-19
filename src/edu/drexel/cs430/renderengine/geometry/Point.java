@@ -58,6 +58,10 @@ public class Point {
 
     }
 
+    protected boolean is2d() {
+        return is2d;
+    }
+
     @Override
     public int hashCode() {
         int result = (x != +0.0f ? Float.floatToIntBits(x) : 0);
@@ -66,18 +70,15 @@ public class Point {
         return result;
     }
 
-    public void transform2D(RealMatrix transform) {
+    public Point transform2D(RealMatrix transform) {
         RealMatrix newPoint = transform.multiply(new Array2DRowRealMatrix(new double[]{x, y, 1}));
         double[] arr = newPoint.getColumn(0);
-        x = (float) arr[0];
-        y = (float) arr[1];
+        return new Point((float) arr[0], (float) arr[1]);
     }
 
-    public void transform3D(RealMatrix transform) {
+    public Point transform3D(RealMatrix transform) {
         RealMatrix newPoint = transform.multiply(new Array2DRowRealMatrix(new double[]{x, y, z, 1}));
         double[] arr = newPoint.getColumn(0);
-        x = (float) arr[0];
-        y = (float) arr[1];
-        z = (float) arr[2];
+        return new Point((float) arr[0], (float) arr[1], (float) arr[2]);
     }
 }

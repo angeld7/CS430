@@ -28,7 +28,7 @@ public class Vector extends Point {
     }
 
     public float magnitude() {
-        return (float) Math.sqrt(Math.pow(x(), 2) + Math.pow(y(), 2));
+        return (float) Math.sqrt(Math.pow(x(), 2) + Math.pow(y(), 2) + (is2d() ? 0 : Math.pow(z(), 2)));
     }
 
     public static float dotProduct(Point v1, Point v2) {
@@ -48,6 +48,13 @@ public class Vector extends Point {
 
     public Vector normalize() {
         float mag = magnitude();
-        return new Vector(x() / mag, y() / mag);
+        if (mag != 0) {
+            if (is2d()) {
+                return new Vector(x() / mag, y() / mag);
+            } else {
+                return new Vector(x() / mag, y() / mag, z() / mag);
+            }
+        }
+        return this;
     }
 }

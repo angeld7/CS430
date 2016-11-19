@@ -6,7 +6,7 @@ package edu.drexel.cs430.renderengine.util;
 public class ArgParser {
     public static Arguments getArgs(String[] args) {
         Arguments arguments = new Arguments();
-        for (int x = 0; x < args.length - 1; ++x) {
+        for (int x = 0; x < args.length; ++x) {
             switch (args[x]) {
                 case "-f":
                     arguments.setFilename(args[++x]);
@@ -17,7 +17,7 @@ public class ArgParser {
                 case "-r":
                     if (arguments.is3d()) {
                         // y value of the VPN in VRC coordinates
-                        arguments.setVupY(Float.parseFloat(args[++x]));
+                        arguments.setVpnY(Float.parseFloat(args[++x]));
                     } else {
                         arguments.setRotation(Float.parseFloat(args[++x]));
                     }
@@ -74,13 +74,13 @@ public class ArgParser {
                     arguments.setVpnX(Float.parseFloat(args[++x]));
                     break;
                 case "-w": // z value of VPN in VRC coordinates
-                    arguments.setVpnY(Float.parseFloat(args[++x]));
-                    break;
-                case "-Q": // x value of VUP in VRC coordinates
                     arguments.setVpnZ(Float.parseFloat(args[++x]));
                     break;
-                case "-R": // y value of VUP in VRC coordinates
+                case "-Q": // x value of VUP in VRC coordinates
                     arguments.setVupX(Float.parseFloat(args[++x]));
+                    break;
+                case "-R": // y value of VUP in VRC coordinates
+                    arguments.setVupY(Float.parseFloat(args[++x]));
                     break;
                 case "-W": // z value of VUP in VRC coordinates
                     arguments.setVupZ(Float.parseFloat(args[++x]));
@@ -99,6 +99,9 @@ public class ArgParser {
                     break;
                 case "-P": // Use parallel projection
                     arguments.setParallelProjection(true);
+                    break;
+                case "-display":
+                    arguments.setDisplay(true);
                     break;
                 default:
                     break;
