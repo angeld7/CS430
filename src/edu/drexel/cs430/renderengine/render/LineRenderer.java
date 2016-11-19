@@ -47,7 +47,7 @@ class LineRenderer {
                 float y = start.y();
                 for (float x = start.x(); x <= end.x(); x++) {
                     canvas.pixelMatrix[Math.round(y)][Math.round(x)] = true;
-                    if ((D = nextD(D, dx, dy)) > 0) y++;
+                    if ((D = nextD(D, dx, dy)) > 0) y = Math.min(y + 1, end.y());
                 }
             } else if (slope > 1) {
                 if (start.y() > end.y()) {
@@ -57,7 +57,7 @@ class LineRenderer {
                 float x = start.x();
                 for (float y = start.y(); y <= end.y(); y++) {
                     canvas.pixelMatrix[Math.round(y)][Math.round(x)] = true;
-                    if ((D = nextD(D, dy, dx)) > 0) x++;
+                    if ((D = nextD(D, dy, dx)) > 0) x = Math.min(x + 1, end.x());
                 }
             } else if (slope < 0 && slope >= -1) {
                 if (start.x() > end.x()) {
@@ -67,7 +67,7 @@ class LineRenderer {
                 float y = start.y();
                 for (float x = start.x(); x <= end.x(); x++) {
                     canvas.pixelMatrix[Math.round(y)][Math.round(x)] = true;
-                    if ((D = nextD(D, dx, dy)) > 0) y--;
+                    if ((D = nextD(D, dx, dy)) > 0) y = Math.max(y - 1, end.y());
                 }
             } else {
                 if (start.y() > end.y()) {
@@ -77,7 +77,7 @@ class LineRenderer {
                 float x = start.x();
                 for (float y = start.y(); y <= end.y(); y++) {
                     canvas.pixelMatrix[Math.round(y)][Math.round(x)] = true;
-                    if ((D = nextD(D, dy, dx)) > 0) x--;
+                    if ((D = nextD(D, dy, dx)) > 0) x = Math.max(x - 1, end.x());
                 }
             }
         }
