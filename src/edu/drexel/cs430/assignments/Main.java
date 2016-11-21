@@ -6,6 +6,7 @@ import edu.drexel.cs430.renderengine.geometry.Polygon;
 import edu.drexel.cs430.renderengine.render.Renderer;
 import edu.drexel.cs430.renderengine.util.*;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -19,11 +20,18 @@ public class Main {
             try {
                 Renderer renderer = new Renderer(arguments);
                 if (arguments.is3d()) {
-                    try (SMFReader reader = new SMFReader(new File(arguments.getFilename()))) {
-                        Polygon polygon;
-                        while ((polygon = reader.nextPolygon()) != null) {
-                            renderer.render3D(polygon);
+                    Color[] colors = {Color.RED, Color.GREEN, Color.BLUE};
+                    int color = 0;
+                    for (String filename : arguments.getFilenames()) {
+                        if (filename != null) {
+                            try (SMFReader reader = new SMFReader(new File(filename))) {
+                                Polygon polygon;
+                                while ((polygon = reader.nextPolygon()) != null) {
+                                    renderer.render3D(polygon, colors[color]);
+                                }
+                            }
                         }
+                        color++;
                     }
                 } else {
                     Geometry type;

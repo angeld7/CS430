@@ -5,6 +5,7 @@ import edu.drexel.cs430.renderengine.geometry.Point;
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.RealMatrix;
 
+import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,6 +14,8 @@ import java.util.List;
  */
 public class Canvas {
     public final boolean[][] pixelMatrix;
+    public final Color[][] pixelColors;
+    public final float[][] pixelZ;
     public final int height, width;
     public final Line left, right, top, bottom;
     public final List<Line> sides;
@@ -20,6 +23,8 @@ public class Canvas {
 
     public Canvas(int canvasX, int canvasY, int xMax, int yMax, int xMin, int yMin) {
         pixelMatrix = new boolean[canvasY][canvasX];
+        pixelColors = new Color[canvasY][canvasX];
+        pixelZ = new float[canvasY][canvasX];
         height = canvasY;
         width = canvasX;
         this.xMax = xMax;

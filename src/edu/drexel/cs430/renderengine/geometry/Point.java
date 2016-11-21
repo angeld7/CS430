@@ -73,7 +73,7 @@ public class Point {
     public Point transform2D(RealMatrix transform) {
         RealMatrix newPoint = transform.multiply(new Array2DRowRealMatrix(new double[]{x, y, 1}));
         double[] arr = newPoint.getColumn(0);
-        return new Point((float) arr[0], (float) arr[1]);
+        return new Point((float) arr[0], (float) arr[1], z());
     }
 
     public Point transform3D(RealMatrix transform) {

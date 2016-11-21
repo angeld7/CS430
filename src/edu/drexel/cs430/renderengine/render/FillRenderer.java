@@ -40,10 +40,11 @@ public class FillRenderer {
             }
             for (int i = 0; i < intersectionsX.size(); i += 2) {
                 for (int x = intersectionsX.get(i); x <= intersectionsX.get(i + 1); x++) {
+                    //if(!canvas.pixelMatrix[y][x] || canvas.pixelZ[y][x] <)
                     canvas.pixelMatrix[y][x] = true;
                 }
             }
-
         }
     }
+
 }

@@ -13,7 +13,7 @@ public class XPMWriter {
         StringBuilder sb = new StringBuilder();
         sb.append("static char *sco100[] = {\n\"");
         sb.append(pixelMatrix.length).append(" ").append(pixelMatrix[0].length);
-        sb.append(" 2 1\"\n\"- c #ffffff\",\n\"# c #000000\",\n");
+        sb.append(" 2 1\"\n\"# c #ffffff\",\n\"- c #000000\",\n");
         for(int y = pixelMatrix.length - 1; y >= 0; y--) {
             sb.append("\"");
             for (int x = 0; x < pixelMatrix[y].length; x++) {

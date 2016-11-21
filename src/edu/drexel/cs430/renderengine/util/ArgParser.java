@@ -103,6 +103,18 @@ public class ArgParser {
                 case "-display":
                     arguments.setDisplay(true);
                     break;
+                case "-F":
+                    arguments.setFront(Float.parseFloat(args[x++]));
+                    break;
+                case "-B":
+                    arguments.setBack(Float.parseFloat(args[x++]));
+                    break;
+                case "-g":
+                    arguments.setFilename2(args[++x]);
+                    break;
+                case "-i":
+                    arguments.setFilename3(args[++x]);
+                    break;
                 default:
                     break;
             }

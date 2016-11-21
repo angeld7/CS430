@@ -2,11 +2,16 @@ package edu.drexel.cs430.renderengine.util;
 
 import edu.drexel.cs430.renderengine.geometry.Vector;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by Angel on 11/8/2016.
  */
 public class Arguments {
     private String filename;
+    private String filename2;
+    private String filename3;
     private double scale = 1;
     private double rotation = 0;
     private int translateX = 0;
@@ -50,6 +55,26 @@ public class Arguments {
 
     public void setFilename(String filename) {
         this.filename = filename;
+    }
+
+    public List<String> getFilenames() {
+        return Arrays.asList(filename, filename2, filename3);
+    }
+
+    public String getFilename2() {
+        return filename2;
+    }
+
+    public void setFilename2(String filename2) {
+        this.filename2 = filename2;
+    }
+
+    public String getFilename3() {
+        return filename3;
+    }
+
+    public void setFilename3(String filename3) {
+        this.filename3 = filename3;
     }
 
     public double getScale() {
@@ -301,19 +326,19 @@ public class Arguments {
     }
 
     public Vector getPRP() {
-        return new Vector(prpX,prpY,prpZ);
+        return new Vector(prpX, prpY, prpZ);
     }
 
     public Vector getVRP() {
-        return new Vector(vrpX,vrpY,vrpZ);
+        return new Vector(vrpX, vrpY, vrpZ);
     }
 
     public Vector getVPN() {
-        return new Vector(vpnX,vpnY,vpnZ);
+        return new Vector(vpnX, vpnY, vpnZ);
     }
 
     public Vector getVUP() {
-        return new Vector(vupX,vupY,vupZ);
+        return new Vector(vupX, vupY, vupZ);
     }
 
     public boolean isDisplay() {

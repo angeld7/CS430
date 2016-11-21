@@ -2,6 +2,7 @@ package edu.drexel.cs430.renderengine.geometry;
 
 import org.apache.commons.math3.linear.RealMatrix;
 
+import java.awt.*;
 import java.util.Iterator;
 
 /**
@@ -10,6 +11,7 @@ import java.util.Iterator;
 public class Line implements Iterable<Point> {
     private Point startPoint;
     private Point endPoint;
+    Color color;
 
     public Line(Point startPoint, Point endPoint) {
         this.startPoint = startPoint;
@@ -69,5 +71,13 @@ public class Line implements Iterable<Point> {
                 return endPoint;
             }
         }
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 }

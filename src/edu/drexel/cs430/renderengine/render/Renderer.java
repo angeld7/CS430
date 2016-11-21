@@ -12,6 +12,8 @@ import edu.drexel.cs430.renderengine.util.SwingDisplay;
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.RealMatrix;
 
+import java.awt.*;
+
 /**
  * Created by Angel on 10/17/2016.
  */
@@ -56,7 +58,7 @@ public class Renderer {
             worldToViewport2D = MatrixGenerator.generateWorldToViewportMatrix(args);
         }
         if (args.isDisplay()) {
-            swingDisplay = new SwingDisplay();
+            swingDisplay = new SwingDisplay(canvas);
         }
     }
 
@@ -68,7 +70,7 @@ public class Renderer {
             lineRenderer.render(line);
         }
         if (swingDisplay != null) {
-            swingDisplay.setImageArray(canvas.pixelMatrix);
+            swingDisplay.refreshImage();
         }
     }
 
@@ -85,12 +87,12 @@ public class Renderer {
             }
         }
         if (swingDisplay != null) {
-            swingDisplay.setImageArray(canvas.pixelMatrix);
+            swingDisplay.refreshImage();
         }
     }
 
 
-    public void render3D(Polygon polygon) {
+    public void render3D(Polygon polygon, Color color) {
         polygon = polygon.transform3D(worldToViewport3D);
         if (!parallel) {
             polygon = polygonClipper.clip3DPerspective(polygon, zMin);
@@ -100,12 +102,14 @@ public class Renderer {
         }
         if (polygon != null) {
             polygon = polygon.transform2D(worldToViewport2D);
+            polygon.setColor(color);
             for (Line side : polygon) {
                 lineRenderer.render(side);
             }
+            //fillRenderer.fillPolygon(polygon);
         }
         if (swingDisplay != null) {
-            swingDisplay.setImageArray(canvas.pixelMatrix);
+            swingDisplay.refreshImage();
         }
     }
 

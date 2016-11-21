@@ -2,6 +2,7 @@ package edu.drexel.cs430.renderengine.geometry;
 
 import org.apache.commons.math3.linear.RealMatrix;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -16,6 +17,7 @@ public class Polygon implements Iterable<Line> {
 
     private static final float MAX = Float.MAX_VALUE;
     private float xMax, xMin, yMax, yMin, zMax, zMin;
+    private Color color;
 
     public Polygon() {
         vertices = new ArrayList<>();
@@ -46,7 +48,9 @@ public class Polygon implements Iterable<Line> {
     }
 
     public Line getEdge(int edgeNum) {
-        return new Line(getVertex((edgeNum - 1) < 0 ? vertices.size() - 1 : edgeNum - 1), getVertex(edgeNum));
+        Line line = new Line(getVertex((edgeNum - 1) < 0 ? vertices.size() - 1 : edgeNum - 1), getVertex(edgeNum));
+        line.setColor(color);
+        return line;
     }
 
     private void findLimits() {
@@ -167,5 +171,13 @@ public class Polygon implements Iterable<Line> {
                 newPoints.add(new Point(p.x() / -p.z(), p.y() / -p.z(), p.z()))
         );
         return new Polygon(newPoints);
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 }
