@@ -108,8 +108,8 @@ public class MatrixGenerator {
     private static RealMatrix getOrthographicProjectionMatrix(float uMax, float uMin, float vMax, float vMin, float front, float back, Vector prp) {
         return new Array2DRowRealMatrix(
                 new double[][]{
-                        {2 / (uMax - uMin), 0, ((uMax + uMin) - 2 * prp.x()) / ((uMax - uMin) * prp.z()), -((uMax + uMin) / 2)},
-                        {0, 2 / (vMax - vMin), ((vMax + vMin) - 2 * prp.y()) / ((vMax - vMin) * prp.z()), -((vMax + vMin) / 2)},
+                        {2 / (uMax - uMin), 0, ((uMax + uMin) - 2 * prp.x()) / ((uMax - uMin) * prp.z()), -((uMax + uMin) / (uMax - uMin))},
+                        {0, 2 / (vMax - vMin), ((vMax + vMin) - 2 * prp.y()) / ((vMax - vMin) * prp.z()), -((vMax + vMin) / (vMax - vMin))},
                         {0, 0, 1 / (front - back), -(front / (front - back))},
                         {0, 0, 0, 1}
                 }
